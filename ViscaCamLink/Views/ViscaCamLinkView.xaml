@@ -686,6 +686,37 @@
                     </Grid>
                 </Grid>
             </Border>
+
+            <Border Style="{StaticResource BaseBorder}"
+                    Visibility="{Binding ZoomContainerVisible,
+                                         Converter={StaticResource BoolToCollapsedConverter}}">
+                <Grid Margin="{StaticResource DefaultMargin}">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+
+                    <TextBlock Grid.Column="0"
+                               Grid.ColumnSpan="2"
+                               Grid.Row="0"
+                               Text="Controller XY"
+                               Style="{StaticResource HeaderTextBlock}" />
+
+                    <!-- Control -->
+
+                    <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding GameControllerData}"/>
+
+                </Grid>
+            </Border>
         </StackPanel>
         <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}"/>
     </Grid>

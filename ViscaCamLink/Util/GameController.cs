@@ -28,27 +28,29 @@ namespace ViscaCamLink.Util {
         }
 
         //Output
-        public static class Left {
-            public static double X {
-                get {
-                    if (!_controller1.IsConnected)
-                        return 0;
+        public static class One {
+            public static class Left {
+                public static double X {
+                    get {
+                        if (!_controller1.IsConnected)
+                            return 0;
 
-                    if (Math.Abs((float)_controller1.GetState().Gamepad.LeftThumbX) < deadband)
-                        return 0;
-                    else
-                        return (float)_controller1.GetState().Gamepad.LeftThumbX / short.MinValue * -100;
+                        if (Math.Abs((float)_controller1.GetState().Gamepad.LeftThumbX) < deadband)
+                            return 0;
+                        else
+                            return (float)_controller1.GetState().Gamepad.LeftThumbX / short.MinValue * -100;
+                    }
                 }
-            }
-            public static double Y {
-                get {
-                    if (!_controller1.IsConnected)
-                        return 0;
+                public static double Y {
+                    get {
+                        if (!_controller1.IsConnected)
+                            return 0;
 
-                    if (Math.Abs((float)_controller1.GetState().Gamepad.LeftThumbY) < deadband)
-                        return 0;
-                    else
-                        return (float)_controller1.GetState().Gamepad.LeftThumbY / short.MinValue * 100;
+                        if (Math.Abs((float)_controller1.GetState().Gamepad.LeftThumbY) < deadband)
+                            return 0;
+                        else
+                            return (float)_controller1.GetState().Gamepad.LeftThumbY / short.MinValue * 100;
+                    }
                 }
             }
         }
