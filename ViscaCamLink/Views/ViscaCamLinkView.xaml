@@ -687,5 +687,6 @@
                 </Grid>
             </Border>
         </StackPanel>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}"/>
     </Grid>
 </Window>

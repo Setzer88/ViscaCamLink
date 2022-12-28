@@ -1,9 +1,14 @@
 ﻿namespace ViscaCamLink.Views
 {
+    using CameraControl.Visca;
     using System;
     using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Timers;
     using System.Windows;
     using System.Windows.Input;
+    using ViscaCamLink.Properties;
+    using ViscaCamLink.Util;
 
     /// <summary>
     /// Interaction logic for ViscaCamLinkView.xaml
@@ -13,6 +18,13 @@
         public ViscaCamLinkView()
         {            
             InitializeComponent();
+            var t = new System.Timers.Timer(100);
+            t.Elapsed += T_Elapsed;
+            t.Start();
+        }
+
+        private void T_Elapsed(object? sender, ElapsedEventArgs e) {
+            
         }
 
         private void Window_LayoutUpdated(Object sender, EventArgs e)
