@@ -36,16 +36,16 @@
             MoveEndCommand = new Command(ExecuteMoveEnd);
             ZoomCommand = new Command(ExecuteZoom);                                   
 
-            GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad0, () => ExecuteMemorySetOrRecall("0"));
-            GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad1, () => ExecuteMemorySetOrRecall("1"));
-            GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad2, () => ExecuteMemorySetOrRecall("2"));
-            GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad3, () => ExecuteMemorySetOrRecall("3"));
-            GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad4, () => ExecuteMemorySetOrRecall("4"));
-            GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad5, () => ExecuteMemorySetOrRecall("5"));
-            GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad6, () => ExecuteMemorySetOrRecall("6"));
-            GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad7, () => ExecuteMemorySetOrRecall("7"));
-            GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad8, () => ExecuteMemorySetOrRecall("8"));
-            GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad9, () => ExecuteMemorySetOrRecall("9"));
+            //GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad0, () => ExecuteMemorySetOrRecall("0"));
+            //GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad1, () => ExecuteMemorySetOrRecall("1"));
+            //GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad2, () => ExecuteMemorySetOrRecall("2"));
+            //GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad3, () => ExecuteMemorySetOrRecall("3"));
+            //GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad4, () => ExecuteMemorySetOrRecall("4"));
+            //GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad5, () => ExecuteMemorySetOrRecall("5"));
+            //GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad6, () => ExecuteMemorySetOrRecall("6"));
+            //GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad7, () => ExecuteMemorySetOrRecall("7"));
+            //GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad8, () => ExecuteMemorySetOrRecall("8"));
+            //GlobalHotKey.RegisterHotKey(ModifierKeys.None, Key.NumPad9, () => ExecuteMemorySetOrRecall("9"));
 
             var gpTimer = new System.Timers.Timer(100);
             gpTimer.Elapsed += GpTimer_Elapsed;
@@ -55,27 +55,29 @@
         private void GpTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e) {
             NotifyPropertyChanged(nameof(GameControllerData));
             bool? tilt = null;
-            if (GameController.One.Left.Y > 10)
+            if (JoystickController.Joystick.Y > 0)
                 tilt = true;
 
-            if (GameController.One.Left.Y < -10)
+            if (JoystickController.Joystick.Y < 0)
                 tilt = false;
 
             bool? pan = null;
-            if (GameController.One.Left.X > 10)
+            if (JoystickController.Joystick.X > 0)
                 pan = true;
 
-            if (GameController.One.Left.X < -10)
+            if (JoystickController.Joystick.X < 0)
                 pan = false;
 
-            var absX = Math.Abs(GameController.One.Left.X);
-            var absY = Math.Abs(GameController.One.Left.Y);
-            var abs = Math.Max(absY, absX);
-            var speed = (Byte)(abs * 0.24);
+            //var absX = Math.Abs(GameController.Joystick.Left.X);
+            //var absY = Math.Abs(GameController.Joystick.Left.Y);
+            //var abs = Math.Max(absY, absX);
+            //var speed = (Byte)(abs * 0.24);
 
             //var speedInPercent = (Double)Settings.Default.PanTiltSpeed / ViscaController.MaxPanSpeed;
 
             //var spe = (Byte)Math.Ceiling(ViscaController.MaxTiltSpeed * speedInPercent);
+            var speed = (byte)JoystickController.Joystick.Speed;
+            Settings.Default.PanTiltSpeed = speed;
 
             ViscaController.ContinuousPanTilt(pan, tilt, speed, speed);
         }
@@ -232,7 +234,7 @@
         }
 
         public string GameControllerData {
-            get => string.Concat(GameController.One.Left.Y.ToString()," ", GameController.One.Left.X.ToString());
+            get => string.Concat(JoystickController.Joystick.Y.ToString()," | ", JoystickController.Joystick.X.ToString(), " | ",JoystickController.Joystick.Speed);
         }
 
         private CancellationTokenSource? MemoryInfoCancellationTokenSource { get; set; } 
